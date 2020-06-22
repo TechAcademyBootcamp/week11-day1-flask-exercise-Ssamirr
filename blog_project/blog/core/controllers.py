@@ -6,7 +6,8 @@ import json
 @core.route('/')
 def home():
     blogs = all_blogs()
-    word = request.args.get('x')
+    print(request.args)
+    word = request.args.get('word')
     if word:
         blogs = blog_search(word)
         print(blogs)
@@ -49,6 +50,7 @@ def information(id):
 @core.route('/delete-blog/<int:id>')
 def delete_blog(id):
     blog = blog_delete(id)
+    flash('Blog deleted')
     return redirect('/')
 
 

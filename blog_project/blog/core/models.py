@@ -66,8 +66,9 @@ def blog_update(title, description, owner_name,id):
 def blog_search(x):
     with connection.cursor() as cursor:
         # Create a new record
-        sql = """SELECT * from blog_project.blogs WHERE title LIKE %s"""
+        sql = """SELECT * from blog_project.blogs1 WHERE title LIKE %s"""
         cursor.execute(sql, ("%" + x + "%"))
+    connection.commit()
     return cursor.fetchall()
 
 # def insert_table():
