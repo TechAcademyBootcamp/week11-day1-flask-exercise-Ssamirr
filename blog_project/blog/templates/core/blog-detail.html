@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    {% include 'includes/navbar.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                
+
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    <div class="card-body">
+                        <h2 class="card-title">{{blog.title}}</h2>
+                        <p class="card-text">{{blog.description}}</p>
+                        <a href="/update-blog/{{blog.id}}" class="btn btn-primary">UPDATE &rarr;</a>
+                        <a href="/delete-blog/{{blog.id}}" class="btn btn-primary">DELETE &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on {{blog.created_at.strftime('%B %d, %Y')}} by
+                        <a href="#">{{blog.owner_name}}</a>
+                    </div>
+                </div>
+            </div>
+            {% include 'includes/sidebar.html' %}
+        </div>
+    </div>
+
+
+</body>
+
+</html>
