@@ -14,11 +14,34 @@
             <h2 class="card-title">{{blog.title}}</h2>
             <p class="card-text">{{blog.description}}</p>
             <a href="/update-blog/{{blog.id}}" class="btn btn-primary">UPDATE &rarr;</a>
-            <a href="/delete-blog/{{blog.id}}" class="btn btn-primary">DELETE &rarr;</a>
+            <button type="button" class="btn btn-primary" style="border: 0" data-toggle="modal"
+                data-target="#exampleModal">DELETE &rarr;</button>
         </div>
         <div class="card-footer text-muted">
             Posted on {{blog.created_at.strftime('%B %d, %Y')}} by
             <a href="#">{{blog.owner_name}}</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Diqqet!!!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Silmek Isteyirsiniz ?
+            </div>
+            <div class="modal-footer">
+                <a href="/delete-blog/{{blog.id}}" style="color: white" class="btn btn-secondary">Beli</a>
+                <a href="/blog/{{blog.id}}" type="button" class="btn btn-primary">Xeyr</a>
+            </div>
         </div>
     </div>
 </div>
