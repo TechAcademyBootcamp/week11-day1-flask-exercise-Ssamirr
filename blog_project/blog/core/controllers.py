@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, render_template,request,redirect,flash
 from blog.core.models import create_blog , all_blogs , blog_detail , blog_delete, blog_update , blog_search
+from blog.core.forms import BlogForm
+
 core = Blueprint(__name__,'core')
 import json
 
@@ -18,25 +20,37 @@ def home():
 
 @core.route('/create',methods=['GET','POST'])
 def create():
-    print(request.form)
-    if request.method == 'POST':
-        # create_blog(title=request.form['title'], description=request.form['description'], owner_name=request.form['owner_name'], image='')
-        create_blog(**request.form,image='')
-        flash('Blog created')
+    form = BlogForm()
+    if form.validate_on_submit():
+        create_blog(**form.data, image='')
         return redirect('/')
-    return render_template('core/create.html')
+    context = {
+        'form' : form
+    }
+    return render_template('core/create.html',**context)
+    # if request.method == 'POST':
+    #     # create_blog(title=request.form['title'], description=request.form['description'], owner_name=request.form['owner_name'], image='')
+    #     create_blog(**request.form,image='')
+    #     flash('Blog created')
+    #     return redirect('/')
+    
 
 @core.route('/update-blog/<int:id>',methods=['GET','POST'])
 def update(id):
-    blog = blog_detail(id)
-    context = {
-        'blog':blog
-    }
     if request.method == 'POST':
+        form = BlogForm()
+        if form.validate_on_submit():
         # create_blog(title=request.form['title'], description=request.form['description'], owner_name=request.form['owner_name'], image='')
-        blog_update(**request.form,id=id)
-        flash('Blog updated')
-        return redirect('/')
+            blog_update(**form.data,id=id)
+            flash('Blog updated')
+            return redirect('/')
+    else :
+        blog = blog_detail(id)
+        print(blog)
+        form = BlogForm(data = blog)
+    context = {
+        'form':form
+    }
     return render_template('core/blog-update.html',**context)
 
 @core.route('/blog/<int:id>')

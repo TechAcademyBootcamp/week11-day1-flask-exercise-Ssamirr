@@ -20,7 +20,7 @@ def create_blog_table():
 
 create_blog_table()
 
-def create_blog(title, description, owner_name, image, is_published=True):
+def create_blog(title, description, owner_name, image, is_published=True,**kwargs):
     with connection.cursor() as cursor:
         # Create a new record
         sql = """insert into blog_project.blogs1(title, description, owner_name, image, created_at, is_published)
@@ -54,7 +54,7 @@ def blog_delete(id):
     return cursor.fetchone()
     
 
-def blog_update(title, description, owner_name,id):
+def blog_update(title, description, owner_name,id,**kwargs):
     with connection.cursor() as cursor:
     # Create a new record
         sql = "Update blog_project.blogs1 Set title=%s, description=%s, owner_name=%s where id =%s"
@@ -71,34 +71,3 @@ def blog_search(x):
     connection.commit()
     return cursor.fetchall()
 
-# def insert_table():
-#     with connection.cursor() as cursor:
-#         # Create a new record
-#         sql = "INSERT INTO  blog_project.blogs(`title`, `decription`,`image`,`is_published`,`created_at`,`updated_at`) VALUES (%s, %s,%s,%s,%s,%s)"
-#         cursor.execute(sql, ('blog 1', 'dasdadad','home/pictures/image.jpg',True,'2020-06-10 10:00:00','2020-06-10 10:00:00'))
-
-#     # connection is not autocommit by default. So you must commit to save
-#     # your changes.
-#     connection.commit()
-
-# # insert_table()
-
-# def update_table():
-#     with connection.cursor() as cursor:
-#         # Create a new record
-#         sql = "Update blog_project.blogs Set title = 'blog 2' where id = 2"
-#         cursor.execute(sql)
-
-#     # connection is not autocommit by default. So you must commit to save
-#     # your changes.
-#     connection.commit()
-
-# update_table()
-
-# def get_blogs():
-#     with connection.cursor() as cursor:
-#         # Read a single record
-#         sql = "SELECT * FROM blog_project.blogs"
-#         cursor.execute(sql)
-#         result = cursor.fetchall()
-#         return result
