@@ -1,28 +1,45 @@
-from flask import Blueprint, jsonify, render_template,request,redirect,flash
-from blog.core.models import create_blog , all_blogs , blog_detail , blog_delete, blog_update , blog_search
+from flask import Blueprint, jsonify, render_template,request,redirect,flash,session
+from blog.core.models import create_blog , all_blogs , blog_detail , blog_delete, blog_update , blog_search,get_blog_count
 from blog.core.forms import BlogForm
+from blog.core.utils import login_required
+import math
 
 core = Blueprint(__name__,'core')
 import json
 
 @core.route('/')
 def home():
-    blogs = all_blogs()
+    page = int(request.args.get('page', 1))
+    blogs = all_blogs((page-1)*2,2)
+    page_count = math.ceil(get_blog_count()/2)
+    page_range = range(1,page_count+1)
     print(request.args)
     word = request.args.get('word')
     if word:
         blogs = blog_search(word)
         print(blogs)
+    next_page = None
+    previous_page = None
+    if page+1 <= page_count:
+        next_page = page + 1
+    if page-1 >= 0:
+        previous_page = page - 1
     context = {
-        'blogs':blogs
+        'blogs':blogs,
+        'page_range' : page_range,
+        'next_page' : next_page,
+        'previous_page' : previous_page,
+        'current_page' : page
     }
     return render_template('core/index.html',**context)
 
 @core.route('/create',methods=['GET','POST'])
+@login_required
 def create():
     form = BlogForm()
     if form.validate_on_submit():
-        create_blog(**form.data, image='')
+        create_blog(**form.data,user_id = session.get('user_id'),image='')
+        flash('Melumat elave edildi')
         return redirect('/')
     context = {
         'form' : form
@@ -36,6 +53,7 @@ def create():
     
 
 @core.route('/update-blog/<int:id>',methods=['GET','POST'])
+@login_required
 def update(id):
     if request.method == 'POST':
         form = BlogForm()
@@ -62,6 +80,7 @@ def information(id):
     return render_template('core/blog-detail.html',**context)
 
 @core.route('/delete-blog/<int:id>')
+@login_required
 def delete_blog(id):
     blog = blog_delete(id)
     flash('Blog deleted')
