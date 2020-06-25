@@ -1,0 +1,4 @@
+FROM hassioaddons/phpmyadmin-i386:f930326
+
+ENV MYSQL_ROOT_PASSWORD 123
+EXPOSE 80

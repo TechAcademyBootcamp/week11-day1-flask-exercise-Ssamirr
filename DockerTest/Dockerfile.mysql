@@ -1,0 +1,6 @@
+FROM pyriand3r/i386-mysql:5.7
+
+ENV MYSQL_ROOT_PASSWORD 
+EXPOSE 3306
+CMD ["--default-authentication-plugin=mysql_native_password"]
+-v ./mydb:/var/lib/mysql

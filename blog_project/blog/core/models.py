@@ -93,3 +93,31 @@ def get_blog_count():
         cursor.execute(sql)
     return cursor.fetchone()['count(id)']
 
+def get_user_count():
+    with connection.cursor() as cursor:
+        # Create a new record
+        sql = """select count(id) from blog_project.users 
+        """
+        cursor.execute(sql)
+    return cursor.fetchone()['count(id)']
+
+def create_website_table():
+    with connection.cursor() as cursor:
+        # Create a new record
+        sql = """insert into blog_project.about_website(social_adress, email,phone_number)
+            values('Blog.com', 'Blog@gmail','+994000000') 
+            """
+        cursor.execute(sql)
+    connection.commit()
+
+def website_table():
+    with connection.cursor() as cursor:
+        # Create a new record
+        sql = """SELECT * From blog_project.about_website
+            """
+        cursor.execute(sql)
+    return cursor.fetchone()
+
+# create_website_table()
+
+

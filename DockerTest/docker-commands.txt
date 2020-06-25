@@ -1,0 +1,31 @@
+sudo apt install docker.io
+sudo apt install docker-compose
+docker-compose.yml
+fayl adi = docker-compose
+fayl adi up -d (Yukleyir,Set up eliyir,Ishe salir)
+bashqa docker isleyende problem verir
+
+docker rm -f $(docker ps -aq)
+sudo docker rm -v $(sudo docker ps -aq -f status=exited)
+evvelki dockerleri dayandirir
+
+Dockerfile
+
+(sudo) docker ps -a (hansi proqramlarin ishlediyini gosterir)
+(sudo) docker ps -aq (hansi proqramlarin statusun up oldugunu gosterir)
+(sudo) docker build . (diske yuklemek ucun)
+(sudo) docker images (diskleri ekrana cixardir)
+(sudo) docker run -d <images_id> (ishletmek ucun)
+(sudo) docker run <images_id> (-d olmayanda ekrani tutur, arxa fonda ishlemir. code yazmaq olmur)
+(sudo) docker exec -it  <container_id> ((sudo) docker ps -a eledikde container id gormek olur) bash (kompyutere daxil olmaq ucun...cixmaq ucun "exit" yaziriq)
+(sudo) docker stop <container_id> (proqrami dayandirmaq ucun, proqrami silmir ama)
+(sudo) docker rm <container_id> (proqrami silir)
+(sudo) docker run -p 8890(menim yaratdigim kompun ishlediyi port):8888(port) -d b2b7dbc72c7d(images_id)
+(sudo) docker rmi <images_id> (image silir)
+
+
+localhost:8890
+
+pip freeze > requirements.txt (requirements.txt-ye pip freezedekileri yukleyir)
+
+

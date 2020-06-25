@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, render_template,request,redirect,flash,session
 from blog.core.models import create_blog , all_blogs , blog_detail , blog_delete, blog_update , blog_search,get_blog_count
-from blog.core.forms import BlogForm
+from blog.core.forms import BlogForm,ContactForm
 from blog.core.utils import login_required
+from blog import Contact ,db
 import math
 
 core = Blueprint(__name__,'core')
@@ -85,6 +86,33 @@ def delete_blog(id):
     blog = blog_delete(id)
     flash('Blog deleted')
     return redirect('/')
+
+@core.route('/contact',methods=['GET','POST'])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        contact_info =Contact(username=form.username.data, email=form.email.data, subject=form.subject.data, message=form.message.data)
+        db.session.add(contact_info)
+        db.session.commit()
+        flash('Mesajiniz gonderildi')
+        return redirect('/')
+    context = {
+        'form' : form
+    }
+    return render_template('core/contact.html',**context)
+
+@core.route('/faqs')
+def faqs():
+    questions =Contact.query.all()
+    context ={
+        'questions':questions
+    }
+    return render_template('core/faqs.html', **context)
+
+
+
+
+
 
 
 
